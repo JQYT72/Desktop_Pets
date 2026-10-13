@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3ABD3534-E896-4F7E-B5DE-59D382E4F38C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopPets.App", "src\DesktopPets.App\DesktopPets.App.csproj", "{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DB20010-D52B-4ABA-A755-81401988912E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopPets.Tests", "tests\DesktopPets.Tests\DesktopPets.Tests.csproj", "{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B64B8EC-8C9D-4424-8021-C6CBF94B4EC2} = {3ABD3534-E896-4F7E-B5DE-59D382E4F38C}
+		{BC5C93AC-6F3B-4037-94DE-CAA94B1F5FBD} = {8DB20010-D52B-4ABA-A755-81401988912E}
+	EndGlobalSection
+EndGlobal

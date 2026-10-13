@@ -1,0 +1,320 @@
+<Window x:Class="DesktopPets.App.Views.PetManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="桌宠管理器"
+        Width="760"
+        Height="680"
+        MinWidth="680"
+        MinHeight="620"
+        AllowDrop="True"
+        Drop="Window_Drop"
+        DragOver="Window_DragOver"
+        ResizeMode="CanResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterOwner">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF2F7FF" Offset="0" />
+            <GradientStop Color="#FFFFF0FA" Offset="0.55" />
+            <GradientStop Color="#FFEAF5FF" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#EEFFFFFF" />
+            <Setter Property="BorderBrush" Value="#DCCDF6" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="Margin" Value="0,0,0,14" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="Background" Value="#FFF7F3FF" />
+            <Setter Property="BorderBrush" Value="#CDBDF2" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#3F315C" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#FF8B7DFF" />
+            <Setter Property="BorderBrush" Value="#FF8B7DFF" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Padding" Value="8,5" />
+            <Setter Property="Background" Value="#F8FFFFFF" />
+            <Setter Property="BorderBrush" Value="#DDD4EE" />
+            <Setter Property="Foreground" Value="#3F315C" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="Background" Value="#F8FFFFFF" />
+            <Setter Property="BorderBrush" Value="#DDD4EE" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Padding="18"
+                Background="#F5FFFFFF"
+                BorderBrush="#D4C6F2"
+                BorderThickness="1"
+                CornerRadius="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+                    <TextBlock Text="桌宠管理器"
+                               FontSize="26"
+                               FontWeight="Bold"
+                               Foreground="#272047" />
+                    <TextBlock Margin="0,6,0,0"
+                               Foreground="#6B5E8E"
+                               FontSize="13"
+                               Text="导入、互动、缩放和动作预览都在这里。" />
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Padding="14,8"
+                        VerticalAlignment="Center"
+                        Background="#FFFFEEF8"
+                        BorderBrush="#F2B6DA"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <TextBlock Foreground="#7A4B70"
+                               FontWeight="SemiBold"
+                               Text="{Binding CurrentPetName, StringFormat=当前宠物：{0}}" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,16,0,14"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.05*" />
+                    <ColumnDefinition Width="0.95*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="导入宠物包"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       Foreground="#302650" />
+                            <TextBlock Margin="0,4,0,14"
+                                       Foreground="#6F6488"
+                                       Text="选择 pet.json 和 spritesheet.webp，或直接拖入完整文件夹。" />
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Text="pet.json" />
+                                <TextBox x:Name="ManifestPathBox"
+                                         Grid.Row="0"
+                                         Grid.Column="1"
+                                         Margin="0,0,8,8"
+                                         IsReadOnly="True" />
+                                <Button Grid.Row="0"
+                                        Grid.Column="2"
+                                        Margin="0,0,0,8"
+                                        Click="ChooseManifestButton_Click"
+                                        Content="选择" />
+
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Text="spritesheet" />
+                                <TextBox x:Name="SpritesheetPathBox"
+                                         Grid.Row="1"
+                                         Grid.Column="1"
+                                         Margin="0,0,8,0"
+                                         IsReadOnly="True" />
+                                <Button Grid.Row="1"
+                                        Grid.Column="2"
+                                        Click="ChooseSpritesheetButton_Click"
+                                        Content="选择" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="互动设置"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       Foreground="#302650" />
+                            <TextBlock Margin="0,4,0,14"
+                                       Foreground="#6F6488"
+                                       Text="选择桌宠在桌面上的日常节奏，并调整显示大小。" />
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="86" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Text="行为模式" />
+                                <ComboBox Grid.Row="0"
+                                          Grid.Column="1"
+                                          Width="150"
+                                          HorizontalAlignment="Left"
+                                          DisplayMemberPath="DisplayName"
+                                          ItemsSource="{Binding BehaviorModeOptions}"
+                                          SelectedValue="{Binding BehaviorMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Mode" />
+
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="0"
+                                           Margin="0,16,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="宠物大小" />
+                                <Slider Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,16,12,0"
+                                        Minimum="0.5"
+                                        Maximum="2"
+                                        TickFrequency="0.1"
+                                        IsSnapToTickEnabled="True"
+                                        Value="{Binding PetScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="2"
+                                           Margin="0,16,0,0"
+                                           MinWidth="46"
+                                           VerticalAlignment="Center"
+                                           Foreground="#7A4B70"
+                                           FontWeight="SemiBold"
+                                           Text="{Binding ScalePercent}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="动作预览"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       Foreground="#302650" />
+                            <TextBlock Margin="0,4,0,14"
+                                       Foreground="#6F6488"
+                                       Text="点击任意动作，可循环预览对应的 spritesheet 行。" />
+
+                            <ItemsControl ItemsSource="{Binding AnimationOptions}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="3" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0,0,8,8"
+                                                Click="AnimationButton_Click"
+                                                Content="{Binding DisplayName}"
+                                                Tag="{Binding StateName}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Button Margin="0,6,0,0"
+                                    HorizontalAlignment="Right"
+                                    Click="BackToIdleButton_Click"
+                                    Content="回到待机" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <Grid MinHeight="118">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="拖入宠物包"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="#302650"
+                                           TextAlignment="Center" />
+                                <TextBlock Margin="0,8,0,0"
+                                           MaxWidth="260"
+                                           Foreground="#6F6488"
+                                           Text="把 pet.json + spritesheet.webp 或包含两者的文件夹拖进窗口即可导入。"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Padding="14"
+                            Background="#EFFFFFFF"
+                            BorderBrush="#DCCDF6"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                        <TextBlock x:Name="StatusText"
+                                   Foreground="#5A4D75"
+                                   FontWeight="SemiBold"
+                                   Text="准备就绪"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <DockPanel Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Button MinWidth="120"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="ImportButton_Click"
+                        Content="导入并播放" />
+                <Button MinWidth="120"
+                        Click="OpenDataFolderButton_Click"
+                        Content="打开数据目录" />
+            </StackPanel>
+
+            <Button DockPanel.Dock="Right"
+                    MinWidth="90"
+                    HorizontalAlignment="Right"
+                    Click="CloseButton_Click"
+                    Content="关闭" />
+        </DockPanel>
+    </Grid>
+</Window>

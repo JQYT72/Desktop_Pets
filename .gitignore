@@ -1,0 +1,20 @@
+# 构建产物
+[Bb]in/
+[Oo]bj/
+artifacts/
+
+# IDE / 编辑器
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+
+# 测试
+TestResults/
+*.VisualState.xml
+
+# 日志与临时文件
+*.log
+*.tmp

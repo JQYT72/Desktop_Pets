@@ -1,0 +1,104 @@
+<Window x:Class="DesktopPets.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="桌面宠物"
+        AllowsTransparency="True"
+        AllowDrop="True"
+        Background="Transparent"
+        Closing="Window_Closing"
+        DragOver="Window_DragOver"
+        Drop="Window_Drop"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        Topmost="True"
+        UseLayoutRounding="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <ContextMenu x:Key="PetContextMenu">
+            <MenuItem Header="管理" Click="ManageMenuItem_Click" />
+            <MenuItem Header="导入宠物包" Click="ImportMenuItem_Click" />
+            <MenuItem Header="行为模式">
+                <MenuItem Header="静止" Tag="still" Click="BehaviorModeMenuItem_Click" />
+                <MenuItem Header="巡逻" Tag="patrol" Click="BehaviorModeMenuItem_Click" />
+                <MenuItem Header="摸鱼" Tag="loafing" Click="BehaviorModeMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="大小">
+                <MenuItem Header="放大" Click="IncreaseScaleMenuItem_Click" />
+                <MenuItem Header="缩小" Click="DecreaseScaleMenuItem_Click" />
+                <MenuItem Header="恢复默认大小" Click="ResetScaleMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="动作">
+                <MenuItem Header="待机" Tag="idle" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="向右跑" Tag="running-right" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="向左跑" Tag="running-left" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="挥手" Tag="waving" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="跳跃" Tag="jumping" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="失败" Tag="failed" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="等待" Tag="waiting" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="工作" Tag="running" Click="AnimationMenuItem_Click" />
+                <MenuItem Header="检查" Tag="review" Click="AnimationMenuItem_Click" />
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="打开数据目录" Click="OpenDataFolderMenuItem_Click" />
+            <Separator />
+            <MenuItem Header="退出" Click="ExitMenuItem_Click" />
+        </ContextMenu>
+    </Window.Resources>
+
+    <Grid x:Name="RootSurface"
+          Width="{Binding PetSurfaceWidth}"
+          Height="{Binding PetSurfaceHeight}"
+          Background="Transparent"
+          ContextMenu="{StaticResource PetContextMenu}"
+          MouseEnter="RootSurface_MouseEnter"
+          MouseLeave="RootSurface_MouseLeave"
+          MouseMove="RootSurface_MouseMove"
+          PreviewMouseLeftButtonDown="RootSurface_PreviewMouseLeftButtonDown"
+          PreviewMouseLeftButtonUp="RootSurface_PreviewMouseLeftButtonUp">
+        <Image x:Name="PetSprite"
+               MaxWidth="{Binding PetImageMaxSize}"
+               MaxHeight="{Binding PetImageMaxSize}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Bottom"
+               Margin="0,0,0,16"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               RenderTransformOrigin="0.5,0.7"
+               SnapsToDevicePixels="True"
+               Source="{Binding PetImageSource}"
+               Stretch="Uniform">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="PetScale" />
+                    <RotateTransform x:Name="PetRotate" />
+                    <TranslateTransform x:Name="PetTranslate" />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Border Margin="12,10,12,0"
+                Padding="14,10"
+                MaxWidth="220"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="#F8FFFFFF"
+                BorderBrush="#DCCBF7"
+                BorderThickness="1"
+                CornerRadius="8"
+                IsHitTestVisible="False"
+                Visibility="{Binding HasStatusMessage, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Foreground="#3F315C"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Text="{Binding StatusMessage}"
+                       TextAlignment="Left"
+                       TextWrapping="Wrap" />
+        </Border>
+    </Grid>
+</Window>
