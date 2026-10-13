@@ -18,3 +18,6 @@ TestResults/
 # 日志与临时文件
 *.log
 *.tmp
+
+# 本地项目实现方案
+AGENTS.md

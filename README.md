@@ -1,8 +1,10 @@
 # Desktop Pets
 
-A Windows desktop pet MVP built with .NET 8 and WPF.
+[中文](README.zh-CN.md)
 
-## What Is In This MVP
+A Windows desktop pet application built with .NET 8 and WPF. Import your own images or Codex-generated pet packages, and the pet lives on your desktop with a transparent borderless window, drag-and-drop interaction, and spritesheet animations.
+
+## Features
 
 - Transparent, borderless, topmost WPF pet window.
 - Built-in sample pet image.
